@@ -1,6 +1,6 @@
 // @flow
 
-function mergeAdjacentCells(row: number[]): number[] {
+function coupleAdjacentCellToRightSide(row: number[]): number[] {
   //  transforming the row.
   let updateValue = false
   const tranformedRow = row.map((currentValue, currentIndex, list) => {
@@ -43,4 +43,4 @@ function shiftZeros(tranformedRow: number[]): number[] {
   return shiftedRow
 }
 
-export { mergeAdjacentCells, shiftZeros }
+export { coupleAdjacentCellToRightSide, shiftZeros }
