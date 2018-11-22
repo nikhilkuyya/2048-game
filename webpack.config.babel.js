@@ -16,7 +16,7 @@ module.exports = (env = { mode: "development" }) => {
     output: {
       path: path.join(__dirname, "dist"),
       filename: "index.js",
-      publicPath: ifDevelopment("dist/", path.join(__dirname, "dist")),
+      // publicPath: ifDevelopment("dist/", path.join(__dirname, "dist")),
       chunkFilename: ifDevelopment(
         "[name].[hash].chunk.js",
         "[name].[chunkhash].bundle.js"
@@ -28,9 +28,10 @@ module.exports = (env = { mode: "development" }) => {
     mode: (env && env.mode) || "none"
   }
 
+  const jsConfig = framworkConfig("javascript")
   const vueConfig = framworkConfig("vue")
   const buildConfig = pluginConfig("build")
 
-  const config = webpackMerge(basicConfig, vueConfig, buildConfig)
+  const config = webpackMerge(basicConfig, jsConfig, vueConfig, buildConfig)
   return config
 }
