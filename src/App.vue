@@ -1,7 +1,7 @@
 <template>
   <div class="fullgame">
       <board-header></board-header>
-      <game-board :board-state="board"></game-board>
+      <game-board ></game-board>
   </div>
 </template>
 
@@ -24,9 +24,11 @@ export default {
   },
   methods: {
     handleKeyDown: function(evt) {
-      const action = evt.key.toUpperCase().replace("ARROW", "")
-      if (evt.keyCode >= 37 && evt.keyCode <= 40) {
-        this.$store.commit("swipAction", action)
+      if (this.$store.getters.hasGameStarted) {
+        const action = evt.key.toUpperCase().replace("ARROW", "")
+        if (evt.keyCode >= 37 && evt.keyCode <= 40) {
+          this.$store.commit("swipAction", action)
+        }
       }
     }
   }

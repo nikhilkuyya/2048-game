@@ -6,7 +6,8 @@ import { coupleCellToRight, coupleCellToLeft } from "./integration/coupleCells"
 type BoardInformationType = {
   twosCount: number,
   foursCount: number,
-  freeSpaces: number[]
+  freeSpaces: number[],
+  hasGoalReached: boolean
 }
 
 type SwipeDirection = "UP" | "DOWN" | "RIGHT" | "LEFT"
@@ -35,7 +36,8 @@ function getBoardInformation(board: number[][]): BoardInformationType {
   const initialBoardInformation: BoardInformationType = {
     twosCount: 0,
     foursCount: 0,
-    freeSpaces: []
+    freeSpaces: [],
+    hasGoalReached: false
   }
 
   const size = board.length
@@ -46,6 +48,8 @@ function getBoardInformation(board: number[][]): BoardInformationType {
       row.forEach((cellValue, colIndex) => {
         if (cellValue === 0) {
           boardInf.freeSpaces.push(rowIndex * size + colIndex)
+        } else if (cellValue === 2048) {
+          boardInf.hasGoalReached = true
         }
       })
       return boardInf
@@ -92,9 +96,14 @@ function placenew(board: number[][]): { board: number[][], newTile: number } {
   const { twosCount, foursCount, freeSpaces } = getBoardInformation(board)
   const position = pickRandomFreeTileLocation(freeSpaces, board.length)
   const newTile = getNewTile(twosCount, foursCount, freeSpaces.length)
-  if (newTile !== -1 && position !== null) {
-    board.slice()[position.row][position.column] = newTile
+  if (
+    newTile !== -1 &&
+    position !== null &&
+    board[position.row][position.column] === 0
+  ) {
+    board[position.row][position.column] = newTile
   }
+
   return { board, newTile }
 }
 
@@ -122,4 +131,14 @@ function handleSwip(
   return updatedBoard
 }
 
-export { placenew, handleSwip, getBoardInformation }
+function hasGameEnded(board: number[][]): boolean {
+  return (
+    getBoardInformation(board).freeSpaces.length === 0 &&
+    getBoardInformation(swipUp(board)).freeSpaces.length === 0 &&
+    getBoardInformation(swipDown(board)).freeSpaces.length === 0 &&
+    getBoardInformation(swipLeft(board)).freeSpaces.length === 0 &&
+    getBoardInformation(swipRight(board)).freeSpaces.length === 0
+  )
+}
+
+export { placenew, handleSwip, getBoardInformation, hasGameEnded }
