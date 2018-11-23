@@ -4,7 +4,6 @@ import { transposeMatrix, getNumberRepitionCount } from "./unit/transform"
 import { coupleCellToRight, coupleCellToLeft } from "./integration/coupleCells"
 
 type BoardInformationType = {
-  sum: number,
   twosCount: number,
   foursCount: number,
   freeSpaces: number[]
@@ -34,7 +33,6 @@ function swipDown(board: number[][]): number[][] {
 
 function getBoardInformation(board: number[][]): BoardInformationType {
   const initialBoardInformation: BoardInformationType = {
-    sum: 0,
     twosCount: 0,
     foursCount: 0,
     freeSpaces: []
@@ -45,7 +43,6 @@ function getBoardInformation(board: number[][]): BoardInformationType {
     (boardInf, row, rowIndex) => {
       boardInf.twosCount += getNumberRepitionCount(row, 2)
       boardInf.foursCount += getNumberRepitionCount(row, 4)
-      boardInf.sum += row.reduce((acc, cellValue) => acc + cellValue, 0)
       row.forEach((cellValue, colIndex) => {
         if (cellValue === 0) {
           boardInf.freeSpaces.push(rowIndex * size + colIndex)
@@ -96,7 +93,7 @@ function placenew(board: number[][]): { board: number[][], newTile: number } {
   const position = pickRandomFreeTileLocation(freeSpaces, board.length)
   const newTile = getNewTile(twosCount, foursCount, freeSpaces.length)
   if (newTile !== -1 && position !== null) {
-    board[position.row][position.column] = newTile
+    board.slice()[position.row][position.column] = newTile
   }
   return { board, newTile }
 }
