@@ -1,24 +1,7 @@
 // @flow
 
 function coupleAdjacentCellToRightSide(row: number[]): number[] {
-  //  transforming the row.
-  let updateValue = false
-  const tranformedRow = row.map((currentValue, currentIndex, list) => {
-    let retVal = currentValue
-    if (
-      currentIndex + 1 <= list.length - 1 &&
-      currentValue === list[currentIndex + 1] &&
-      !updateValue
-    ) {
-      updateValue = true
-      retVal = 0
-    } else if (updateValue) {
-      retVal = currentValue + list[currentIndex - 1]
-      updateValue = false
-    }
-    return retVal
-  })
-  return tranformedRow
+  return coupleAdjacentCellToLeftSide(row.reverse()).reverse()
 }
 
 function shiftZeros(tranformedRow: number[]): number[] {

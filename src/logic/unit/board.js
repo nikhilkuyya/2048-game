@@ -22,6 +22,7 @@ function pickRandomFreeTileLocation(
   }
   return position
 }
+
 function getNewTile(
   twosCount: number,
   foursCount: number,
@@ -65,14 +66,4 @@ function getBoardInformation(board: number[][]): BoardInformationType {
   )
 
   return boardInformation
-}
-
-function hasGameEnded(board: number[][]): boolean {
-  return (
-    getBoardInformation(board).freeSpaces.length === 0 &&
-    getBoardInformation(swipUp(board)).freeSpaces.length === 0 &&
-    getBoardInformation(swipDown(board)).freeSpaces.length === 0 &&
-    getBoardInformation(swipLeft(board)).freeSpaces.length === 0 &&
-    getBoardInformation(swipRight(board)).freeSpaces.length === 0
-  )
 }

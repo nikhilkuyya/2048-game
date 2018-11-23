@@ -3,11 +3,16 @@
 import {
   pickRandomFreeTileLocation,
   getNewTile,
-  getBoardInformation,
-  hasGameEnded
+  getBoardInformation
 } from "./unit/board"
 import { SwipeDirection, BoardInformationType } from "../boardTypes"
-import { swipUp, swipDown, swipLeft, swipRight } from "./integration/swipAction"
+import {
+  swipUp,
+  swipDown,
+  swipLeft,
+  swipRight,
+  hasGameEnded
+} from "./integration/swipAction"
 export { placenew, handleSwip, getBoardInformation, hasGameEnded }
 
 function placenew(board: number[][]): { board: number[][], newTile: number } {

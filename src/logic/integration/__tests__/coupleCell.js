@@ -36,6 +36,50 @@ describe("right integration test : update row", () => {
     })
   })
 
+  describe("right shift : but no merge", () => {
+    const onlyRightShift = [
+      {
+        input: [2, 4, 6, 0],
+        expected: [0, 2, 4, 6],
+        message: "right shift all three : case 1"
+      },
+      {
+        input: [2, 0, 4, 6],
+        expected: [0, 2, 4, 6],
+        message: "right shift all three : case 2"
+      },
+      {
+        input: [2, 4, 0, 6],
+        expected: [0, 2, 4, 6],
+        message: "right shift all three : case 3"
+      },
+      {
+        input: [0, 4, 6, 0],
+        expected: [0, 0, 4, 6],
+        message: "two shift right : case 1"
+      },
+      {
+        input: [4, 6, 0, 0],
+        expected: [0, 0, 4, 6],
+        message: "two shift right : case 2"
+      },
+      {
+        input: [4, 0, 0, 6],
+        expected: [0, 0, 4, 6],
+        message: "two shift right : case 3"
+      }
+    ]
+
+    onlyRightShift.forEach(testObject => {
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = coupleCellToRight(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
+    })
+  })
+
   describe("single merge ", () => {
     const singleMerge = [
       {
@@ -70,18 +114,18 @@ describe("right integration test : update row", () => {
       },
       {
         input: [8, 0, 8, 8],
-        expected: [0, 0, 16, 8],
+        expected: [0, 0, 8, 16],
         message: "three unique non zeros but one gap and shift to right"
       },
       {
-        message: "three unique non zeros but one gap and shift to right",
-        input: [2, 0, 2, 4],
-        expected: [0, 0, 4, 4]
+        input: [8, 8, 0, 8],
+        expected: [0, 0, 8, 16],
+        message: "three unique non zeros but one gap and shift to right"
       },
       {
-        input: [2, 0, 2, 8],
-        message: "three unique non zeros but one gap and shift to right",
-        expected: [0, 0, 4, 8]
+        message: "two unique non zeros but one zero in between",
+        input: [2, 0, 2, 4],
+        expected: [0, 0, 4, 4]
       },
       {
         input: [0, 0, 8, 8],
@@ -142,6 +186,45 @@ describe("left integration test : update row", () => {
     ]
 
     noChanges.forEach(testObject => {
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = coupleCellToLeft(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
+    })
+  })
+
+  describe("left shift : but no merge", () => {
+    const onlyLeftShift = [
+      {
+        input: [0, 2, 4, 6],
+        expected: [2, 4, 6, 0],
+        message: "only shift left : case 1"
+      },
+      {
+        input: [2, 0, 4, 6],
+        expected: [2, 4, 6, 0],
+        message: "only shift left : case 2"
+      },
+      {
+        input: [2, 4, 0, 6],
+        expected: [2, 4, 6, 0],
+        message: "only shift left : case 2"
+      },
+      {
+        input: [0, 0, 4, 6],
+        expected: [4, 6, 0, 0],
+        message: "two shift left : case 1"
+      },
+      {
+        input: [4, 0, 0, 6],
+        expected: [4, 6, 0, 0],
+        message: "two shift left : case 2"
+      }
+    ]
+
+    onlyLeftShift.forEach(testObject => {
       test(`${testObject.message}`, () => {
         const input = testObject.input
         const actual = coupleCellToLeft(input)

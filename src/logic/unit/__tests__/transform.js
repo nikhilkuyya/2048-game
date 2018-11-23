@@ -24,6 +24,21 @@ describe("merge cells : right", () => {
         expected: [0, 2, 0, 4]
       },
       {
+        message: "zeros in between similar items : case 1",
+        input: [2, 0, 2, 0],
+        expected: [2, 0, 2, 0]
+      },
+      {
+        message: "zeros in between similar items : case 2",
+        input: [0, 2, 0, 2],
+        expected: [0, 2, 0, 2]
+      },
+      {
+        message: "zeros in between similar items : case 3",
+        input: [2, 0, 0, 2],
+        expected: [2, 0, 0, 2]
+      },
+      {
         message: "three unique non zero : no update",
         input: [0, 8, 4, 2],
         expected: [0, 8, 4, 2]
@@ -35,18 +50,8 @@ describe("merge cells : right", () => {
       },
       {
         message: "four non unique but separted by unique non zero : no update",
-        input: [4, 2, 4, 2],
-        expected: [4, 2, 4, 2]
-      },
-      {
-        message: "four non unique but separted by unique non zero : no update",
         input: [2, 4, 8, 16],
         expected: [2, 4, 8, 16]
-      },
-      {
-        message: "zeros in between similar items",
-        input: [2, 0, 2, 0],
-        expected: [2, 0, 2, 0]
       }
     ]
 
@@ -76,6 +81,36 @@ describe("merge cells : right", () => {
         message: "two adjacent center elements into one at end",
         input: [2, 2, 0, 0],
         expected: [0, 4, 0, 0]
+      },
+      {
+        message:
+          "three adjacenet elements but one at right end merges : case 1",
+        input: [0, 2, 2, 2],
+        expected: [0, 2, 0, 4]
+      },
+      {
+        message:
+          "three adjacenet elements but one at right end merges : case 2",
+        input: [2, 2, 0, 2],
+        expected: [0, 4, 0, 2]
+      },
+      {
+        message:
+          "three adjacenet elements but one at right end merges : case 3",
+        input: [2, 2, 2, 0],
+        expected: [2, 0, 4, 0]
+      },
+      {
+        message:
+          "three values :two unique adjacenet elements merges only other says in the place.",
+        input: [2, 2, 4, 0],
+        expected: [0, 4, 4, 0]
+      },
+      {
+        message:
+          "four values :two unique adjacenet elements merges only other says in the place.",
+        input: [4, 2, 2, 4],
+        expected: [4, 0, 4, 4]
       }
     ]
 
@@ -196,23 +231,48 @@ describe("shifting in array", () => {
     })
   })
 
-  describe("one shifted and other not shifted", () => {
-    const oneShiftedButOtherNotShifted = [
+  describe("two elements shifted ", () => {
+    const twoElementsShift = [
       {
-        input: [0, 2, 0, 4],
+        input: [2, 4, 0, 0],
         expected: [0, 0, 2, 4],
-        message: "one position gap"
+        message: "lefties to right"
       },
       {
-        input: [2, 0, 0, 4],
+        input: [2, 0, 4, 0],
         expected: [0, 0, 2, 4],
+        messsage: "lefties but gagied to right"
+      },
+      {
+        input: [2, 4, 0, 4],
+        expected: [0, 2, 4, 4],
         messsage: "two position gap"
       }
+    ]
+    twoElementsShift.forEach(testObject => {
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = shiftZeros(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
+    })
+  })
+
+  describe("three elements shifted ", () => {
+    const threeElementsShift = [
+      {
+        input: [2, 4, 6, 0],
+        expected: [0, 2, 4, 6],
+        message: "lefties to right"
+      }
     ].forEach(testObject => {
-      const input = testObject.input
-      const actual = shiftZeros(input)
-      const expected = testObject.expected
-      expect(actual).toMatchObject(expected)
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = shiftZeros(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
     })
   })
 })
@@ -236,6 +296,11 @@ describe("merge cells : left", () => {
         expected: [0, 2, 0, 4]
       },
       {
+        message: "zeros in between similar items",
+        input: [2, 0, 2, 0],
+        expected: [2, 0, 2, 0]
+      },
+      {
         message: "three unique non zero : no update",
         input: [0, 8, 4, 2],
         expected: [0, 8, 4, 2]
@@ -254,11 +319,6 @@ describe("merge cells : left", () => {
         message: "four non unique but separted by unique non zero : no update",
         input: [2, 4, 8, 16],
         expected: [2, 4, 8, 16]
-      },
-      {
-        message: "zeros in between similar items",
-        input: [2, 0, 2, 0],
-        expected: [2, 0, 2, 0]
       }
     ]
 
