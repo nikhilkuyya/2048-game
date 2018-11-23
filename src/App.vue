@@ -1,44 +1,41 @@
 <template>
-  <div>
-    <div>{{board}}</div>    
+  <div class="fullgame">
+      <board-header></board-header>
+      <game-board :board-state="board"></game-board>
   </div>
 </template>
 
 <script>
-import { placenew, handleSwip } from "./logic/index"
+import GameBoard from "./components/GameBoard.vue"
+import BoardHeader from "./components/BoardHeader.vue"
+
 export default {
-  data() {
-    return {
-      board: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
-    }
-  },
+  components: { GameBoard, BoardHeader },
   created: function() {
-    const { board: initialValue } = placenew(this.board)
-    const { board: secondtwoValue } = placenew(initialValue)
-    this.data = secondtwoValue
-    document.addEventListener("keydown", this.swip)
+    document.addEventListener("keydown", this.handleKeyDown)
   },
   beforeDestroy: function() {
-    document.removeEventListener("keydown", this.swip)
+    document.removeEventListener("keydown", this.handleKeyDown)
+  },
+  computed: {
+    board: function() {
+      return this.$store.getters.boardState
+    }
   },
   methods: {
-    swip: function(evt) {
+    handleKeyDown: function(evt) {
       const action = evt.key.toUpperCase().replace("ARROW", "")
-      switch (evt.keyCode) {
-        case 37:
-          this.board = handleSwip(this.board, action)
-          break
-        case 38:
-          this.board = handleSwip(this.board, action)
-          break
-        case 39:
-          this.board = handleSwip(this.board, action)
-          break
-        case 40:
-          this.board = handleSwip(this.board, action)
-          break
+      if (evt.keyCode >= 37 && evt.keyCode <= 40) {
+        this.$store.commit("swipAction", action)
       }
     }
   }
 }
 </script>
+
+<style>
+.fullgame {
+  width: 30%;
+  margin: auto;
+}
+</style>
