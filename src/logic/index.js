@@ -3,9 +3,10 @@
 import {
   pickRandomFreeTileLocation,
   getNewTile,
-  getBoardInformation
+  getBoardInformation,
+  hasTransformed
 } from "./unit/board"
-import { SwipeDirection, BoardInformationType } from "../boardTypes"
+import { SwipeDirection } from "../boardTypes"
 import {
   swipUp,
   swipDown,
@@ -49,7 +50,13 @@ function handleSwip(
       transformedBoard = swipRight(board)
       break
   }
+  let outputBoard: number[][]
+  if (hasTransformed(board, transformedBoard)) {
+    const { board: updatedBoard } = placenew(transformedBoard)
+    outputBoard = updatedBoard
+  } else {
+    outputBoard = transformedBoard
+  }
 
-  const { board: updatedBoard } = placenew(transformedBoard)
-  return updatedBoard
+  return outputBoard
 }

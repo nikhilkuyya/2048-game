@@ -1,4 +1,9 @@
-export { pickRandomFreeTileLocation, getNewTile, getBoardInformation }
+export {
+  pickRandomFreeTileLocation,
+  getNewTile,
+  getBoardInformation,
+  hasTransformed
+}
 import { BoardInformationType } from "../../boardTypes"
 import { getNumberRepitionCount } from "./transform"
 
@@ -66,4 +71,28 @@ function getBoardInformation(board: number[][]): BoardInformationType {
   )
 
   return boardInformation
+}
+
+function hasTransformed(
+  originalblock: number[][],
+  transformedBlock: number[][]
+): boolean {
+  return transformedBlock.reduce(
+    (hasDifference, transformedRow, transformedRowIndex) => {
+      return (
+        hasDifference ||
+        transformedRow.reduce(
+          (hasChanged, transformedCellValue, transforemdColIndex) => {
+            return (
+              hasChanged ||
+              transformedCellValue !==
+                originalblock[transformedRowIndex][transforemdColIndex]
+            )
+          },
+          hasDifference
+        )
+      )
+    },
+    false
+  )
 }

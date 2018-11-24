@@ -1,3 +1,5 @@
+// @flow
+
 import { transposeMatrix } from "../unit/transform"
 import { getBoardInformation } from "../unit/board"
 
