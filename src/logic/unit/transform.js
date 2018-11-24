@@ -1,10 +1,13 @@
 // @flow
 
-function coupleAdjacentCellToRightSide(row: number[]): number[] {
-  return coupleAdjacentCellToLeftSide(row.reverse()).reverse()
+export {
+  shiftZerosToLeft,
+  coupleAdjacentCellToLeftSide,
+  transposeMatrix,
+  getNumberRepitionCount
 }
 
-function shiftZeros(tranformedRow: number[]): number[] {
+function shiftZerosToLeft(tranformedRow: number[]): number[] {
   const len = tranformedRow.length
   // swifting the array
   const shiftedRow: number[] = []
@@ -53,12 +56,4 @@ function getNumberRepitionCount(row: number[], checkfor: number): number {
   return row.reduce((acc, value) => {
     return value === checkfor ? acc + 1 : acc
   }, 0)
-}
-
-export {
-  coupleAdjacentCellToRightSide,
-  shiftZeros,
-  coupleAdjacentCellToLeftSide,
-  transposeMatrix,
-  getNumberRepitionCount
 }

@@ -2,7 +2,6 @@
 
 import { transposeMatrix } from "../unit/transform"
 import { getBoardInformation } from "../unit/board"
-
 import { coupleCellToRight, coupleCellToLeft } from "./coupleCells"
 
 export { swipDown, swipLeft, swipRight, swipUp, hasGameEnded }

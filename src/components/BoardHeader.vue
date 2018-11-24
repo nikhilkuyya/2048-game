@@ -9,7 +9,7 @@
             Congrats!!, You have Reached 2048 mileStone.
           </p>
           <p v-else-if="isGameOver">
-              No worries, Retry Again
+              Game Over, Try Again.
           </p>          
         </div>
     </header>
@@ -31,7 +31,7 @@ export default {
     gameButtonValue: function() {
       let title = "Start Game"
       if (this.$store.getters.hasGameStarted) {
-        title = this.isGameOver ? "Retry" : "New Game"
+        title = this.isGameOver ? "Try Again" : "New Game"
       }
       return title
     },

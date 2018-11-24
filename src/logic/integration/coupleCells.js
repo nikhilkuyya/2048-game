@@ -1,19 +1,22 @@
 // @flow
 
 import {
-  coupleAdjacentCellToRightSide,
-  shiftZeros,
+  shiftZerosToLeft,
   coupleAdjacentCellToLeftSide
 } from "../unit/transform"
 
+export { coupleCellToRight, coupleCellToLeft, coupleAdjacentCellToRightSide }
+
 function coupleCellToRight(row: number[]): number[] {
-  return shiftZeros(coupleAdjacentCellToRightSide(shiftZeros(row)))
+  return shiftZerosToLeft(coupleAdjacentCellToRightSide(shiftZerosToLeft(row)))
+}
+
+function coupleAdjacentCellToRightSide(row: number[]): number[] {
+  return coupleAdjacentCellToLeftSide(row.reverse()).reverse()
 }
 
 function coupleCellToLeft(row: number[]): number[] {
-  return shiftZeros(
-    coupleAdjacentCellToLeftSide(shiftZeros(row)).reverse()
+  return shiftZerosToLeft(
+    coupleAdjacentCellToLeftSide(shiftZerosToLeft(row)).reverse()
   ).reverse()
 }
-
-export { coupleCellToRight, coupleCellToLeft }

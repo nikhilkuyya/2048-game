@@ -1,4 +1,8 @@
-import { coupleCellToRight, coupleCellToLeft } from "../coupleCells"
+import {
+  coupleCellToRight,
+  coupleCellToLeft,
+  coupleAdjacentCellToRightSide
+} from "../coupleCells"
 
 describe("right integration test : update row", () => {
   describe("no changes", () => {
@@ -332,6 +336,151 @@ describe("left integration test : update row", () => {
       const actual = coupleCellToLeft(input)
       const expected = [4, 8, 0, 0]
       expect(actual).toMatchObject(expected)
+    })
+  })
+})
+
+describe("merge cells : right", () => {
+  describe("no merge/ update", () => {
+    const noMerge = [
+      {
+        input: [0, 0, 0, 2],
+        message: "single non zero : no update",
+        expected: [0, 0, 0, 2]
+      },
+      {
+        input: [0, 0, 4, 2],
+        message: "two unique non zero : no update",
+        expected: [0, 0, 4, 2]
+      },
+      {
+        input: [0, 2, 0, 4],
+        message: "two unique non zero : no update",
+        expected: [0, 2, 0, 4]
+      },
+      {
+        message: "zeros in between similar items : case 1",
+        input: [2, 0, 2, 0],
+        expected: [2, 0, 2, 0]
+      },
+      {
+        message: "zeros in between similar items : case 2",
+        input: [0, 2, 0, 2],
+        expected: [0, 2, 0, 2]
+      },
+      {
+        message: "zeros in between similar items : case 3",
+        input: [2, 0, 0, 2],
+        expected: [2, 0, 0, 2]
+      },
+      {
+        message: "three unique non zero : no update",
+        input: [0, 8, 4, 2],
+        expected: [0, 8, 4, 2]
+      },
+      {
+        message: "three non unique but separted by unique non zero : no update",
+        input: [2, 0, 4, 2],
+        expected: [2, 0, 4, 2]
+      },
+      {
+        message: "four non unique but separted by unique non zero : no update",
+        input: [2, 4, 8, 16],
+        expected: [2, 4, 8, 16]
+      }
+    ]
+
+    noMerge.forEach(testObject => {
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = coupleAdjacentCellToRightSide(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
+    })
+  })
+
+  describe("single merge", () => {
+    const singleMerge = [
+      {
+        message: "two adjacent right corner into one at end",
+        input: [0, 0, 2, 2],
+        expected: [0, 0, 0, 4]
+      },
+      {
+        message: "two adjacent center elements into one at end",
+        input: [0, 2, 2, 0],
+        expected: [0, 0, 4, 0]
+      },
+      {
+        message: "two adjacent center elements into one at end",
+        input: [2, 2, 0, 0],
+        expected: [0, 4, 0, 0]
+      },
+      {
+        message:
+          "three adjacenet elements but one at right end merges : case 1",
+        input: [0, 2, 2, 2],
+        expected: [0, 2, 0, 4]
+      },
+      {
+        message:
+          "three adjacenet elements but one at right end merges : case 2",
+        input: [2, 2, 0, 2],
+        expected: [0, 4, 0, 2]
+      },
+      {
+        message:
+          "three adjacenet elements but one at right end merges : case 3",
+        input: [2, 2, 2, 0],
+        expected: [2, 0, 4, 0]
+      },
+      {
+        message:
+          "three values :two unique adjacenet elements merges only other says in the place.",
+        input: [2, 2, 4, 0],
+        expected: [0, 4, 4, 0]
+      },
+      {
+        message:
+          "four values :two unique adjacenet elements merges only other says in the place.",
+        input: [4, 2, 2, 4],
+        expected: [4, 0, 4, 4]
+      }
+    ]
+
+    singleMerge.forEach(testObject => {
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = coupleAdjacentCellToRightSide(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
+    })
+  })
+
+  describe("two merges", () => {
+    const twoMerge = [
+      {
+        message: "four same values into two",
+        input: [2, 2, 2, 2],
+        expected: [0, 4, 0, 4]
+      },
+
+      {
+        message: "two different values merges",
+        input: [2, 2, 4, 4],
+        expected: [0, 4, 0, 8]
+      }
+    ]
+
+    twoMerge.forEach(testObject => {
+      test(`${testObject.message}`, () => {
+        const input = testObject.input
+        const actual = coupleAdjacentCellToRightSide(input)
+        const expected = testObject.expected
+        expect(actual).toMatchObject(expected)
+      })
     })
   })
 })
