@@ -6,7 +6,7 @@ import {
   getBoardInformation,
   hasTransformed
 } from "./unit/board"
-import { SwipeDirection } from "../boardTypes"
+import { SwipeDirection, BoardState } from "../boardTypes"
 import {
   swipUp,
   swipDown,
@@ -31,23 +31,30 @@ function placenew(board: number[][]): { board: number[][], newTile: number } {
   return { board, newTile }
 }
 
-function handleSwip(
-  board: number[][],
-  direction: SwipeDirection
-): number[][] | null {
+function handleSwip(board: number[][], direction: SwipeDirection): BoardState {
+  let boardState: BoardState
   let transformedBoard: number[][] = board
+  let score = 0
   switch (direction) {
     case "UP":
-      transformedBoard = swipUp(board)
+      boardState = swipUp(board)
+      transformedBoard = boardState.board
+      score = boardState.score
       break
     case "DOWN":
-      transformedBoard = swipDown(board)
+      boardState = swipDown(board)
+      transformedBoard = boardState.board
+      score = boardState.score
       break
     case "LEFT":
-      transformedBoard = swipLeft(board)
+      boardState = swipLeft(board)
+      transformedBoard = boardState.board
+      score = boardState.score
       break
     case "RIGHT":
-      transformedBoard = swipRight(board)
+      boardState = swipRight(board)
+      transformedBoard = boardState.board
+      score = boardState.score
       break
   }
   let outputBoard: number[][]
@@ -58,5 +65,5 @@ function handleSwip(
     outputBoard = transformedBoard
   }
 
-  return outputBoard
+  return { board: outputBoard, score: score }
 }

@@ -95,12 +95,12 @@ describe("shifting in array", () => {
       {
         input: [2, 0, 4, 0],
         expected: [0, 0, 2, 4],
-        messsage: "lefties but gagied to right"
+        message: "lefties but gagied to right"
       },
       {
         input: [2, 4, 0, 4],
         expected: [0, 2, 4, 4],
-        messsage: "two position gap"
+        message: "two position gap"
       }
     ]
     twoElementsShift.forEach(testObject => {
@@ -137,42 +137,43 @@ describe("merge cells : left", () => {
       {
         input: [0, 0, 0, 2],
         message: "single non zero : no update",
-        expected: [0, 0, 0, 2]
+        output: { updatedRow: [0, 0, 0, 2], score: 0 }
       },
       {
         input: [0, 0, 4, 2],
         message: "two unique non zero : no update",
-        expected: [0, 0, 4, 2]
+        output: { updatedRow: [0, 0, 4, 2], score: 0 }
       },
       {
         input: [0, 2, 0, 4],
         message: "two unique non zero : no update",
-        expected: [0, 2, 0, 4]
+        output: { updatedRow: [0, 2, 0, 4], score: 0 }
       },
       {
         message: "zeros in between similar items",
         input: [2, 0, 2, 0],
-        expected: [2, 0, 2, 0]
+        output: { updatedRow: [2, 0, 2, 0], score: 0 }
       },
       {
         message: "three unique non zero : no update",
         input: [0, 8, 4, 2],
-        expected: [0, 8, 4, 2]
+        output: { updatedRow: [0, 8, 4, 2], score: 0 }
       },
       {
         message: "three non unique but separted by unique non zero : no update",
         input: [2, 0, 4, 2],
-        expected: [2, 0, 4, 2]
+
+        output: { updatedRow: [2, 0, 4, 2], score: 0 }
       },
       {
         message: "four non unique but separted by unique non zero : no update",
         input: [4, 2, 4, 2],
-        expected: [4, 2, 4, 2]
+        output: { updatedRow: [4, 2, 4, 2], score: 0 }
       },
       {
         message: "four non unique but separted by unique non zero : no update",
         input: [2, 4, 8, 16],
-        expected: [2, 4, 8, 16]
+        output: { updatedRow: [2, 4, 8, 16], score: 0 }
       }
     ]
 
@@ -180,7 +181,7 @@ describe("merge cells : left", () => {
       test(`${testObject.message}`, () => {
         const input = testObject.input
         const actual = coupleAdjacentCellToLeftSide(input)
-        const expected = testObject.expected
+        const expected = testObject.output
         expect(actual).toMatchObject(expected)
       })
     })
@@ -191,27 +192,27 @@ describe("merge cells : left", () => {
       {
         message: "two adjacent right corner into one at end",
         input: [0, 0, 2, 2],
-        expected: [0, 0, 4, 0]
+        output: { updatedRow: [0, 0, 4, 0], score: 4 }
       },
       {
         message: "two adjacent center elements into one at end",
         input: [0, 2, 2, 0],
-        expected: [0, 4, 0, 0]
+        output: { updatedRow: [0, 4, 0, 0], score: 4 }
       },
       {
         message: "two adjacent center elements into one at end",
         input: [2, 2, 0, 0],
-        expected: [4, 0, 0, 0]
+        output: { updatedRow: [4, 0, 0, 0], score: 4 }
       },
       {
         message: "three adjacent elements merge first : case 1",
         input: [0, 2, 2, 2],
-        expected: [0, 4, 0, 2]
+        output: { updatedRow: [0, 4, 0, 2], score: 4 }
       },
       {
         message: "three adjacent elements merge first : case 2",
         input: [2, 2, 2, 0],
-        expected: [4, 0, 2, 0]
+        output: { updatedRow: [4, 0, 2, 0], score: 4 }
       }
     ]
 
@@ -219,7 +220,7 @@ describe("merge cells : left", () => {
       test(`${testObject.message}`, () => {
         const input = testObject.input
         const actual = coupleAdjacentCellToLeftSide(input)
-        const expected = testObject.expected
+        const expected = testObject.output
         expect(actual).toMatchObject(expected)
       })
     })
@@ -230,13 +231,13 @@ describe("merge cells : left", () => {
       {
         message: "four same values into two",
         input: [2, 2, 2, 2],
-        expected: [4, 0, 4, 0]
+        output: { updatedRow: [4, 0, 4, 0], score: 8 }
       },
 
       {
         message: "two different values merges",
         input: [2, 2, 4, 4],
-        expected: [4, 0, 8, 0]
+        output: { updatedRow: [4, 0, 8, 0], score: 12 }
       }
     ]
 
@@ -244,7 +245,7 @@ describe("merge cells : left", () => {
       test(`${testObject.message}`, () => {
         const input = testObject.input
         const actual = coupleAdjacentCellToLeftSide(input)
-        const expected = testObject.expected
+        const expected = testObject.output
         expect(actual).toMatchObject(expected)
       })
     })

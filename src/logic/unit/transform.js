@@ -24,27 +24,37 @@ function shiftZerosToLeft(tranformedRow: number[]): number[] {
   return shiftedRow
 }
 
-function coupleAdjacentCellToLeftSide(row: number[]): number[] {
+function coupleAdjacentCellToLeftSide(
+  row: number[]
+): { updatedRow: number[], score: number } {
   //  transforming the row.
   let updateValue = false
-  const tranformedRow = row.map((currentValue, currentIndex, list) => {
-    let retVal = -1
-    if (
-      !updateValue &&
-      currentIndex < list.length - 1 &&
-      currentValue === list[currentIndex + 1]
-    ) {
-      retVal = currentValue + list[currentIndex + 1]
-      updateValue = true
-    } else if (updateValue) {
-      retVal = 0
-      updateValue = false
-    } else {
-      retVal = currentValue
-      updateValue = false
+  const tranformedRow = row.reduce(
+    (acc, currentValue, currentIndex, list) => {
+      let retVal = -1
+      if (
+        !updateValue &&
+        currentIndex < list.length - 1 &&
+        currentValue === list[currentIndex + 1]
+      ) {
+        retVal = currentValue + list[currentIndex + 1]
+        acc.score += retVal
+        updateValue = true
+      } else if (updateValue) {
+        retVal = 0
+        updateValue = false
+      } else {
+        retVal = currentValue
+        updateValue = false
+      }
+      acc.updatedRow.push(retVal)
+      return acc
+    },
+    {
+      updatedRow: [],
+      score: 0
     }
-    return retVal
-  })
+  )
   return tranformedRow
 }
 

@@ -15,22 +15,6 @@ export default {
   components: {
     BoardTile
   },
-  // props: {
-  //   boardState: {
-  //     type: Array,
-  //     required: false,
-  //     validator: function(board) {
-  //       if (board) {
-  //         const size = board.length
-  //         return board.reduce(
-  //           (acc, row) => (row.length === size ? acc : false),
-  //           true
-  //         )
-  //       }
-  //       return false
-  //     }
-  //   }
-  // },
   computed: {
     boardState: function() {
       return this.$store.getters.boardState
@@ -42,9 +26,7 @@ export default {
 <style scoped>
 .board {
   border: 3px dashed red;
-
   margin-top: 2rem;
-
   border-radius: 5%;
 }
 

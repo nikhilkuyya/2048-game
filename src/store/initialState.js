@@ -8,7 +8,8 @@ function setInitialState() {
   const initialState = {
     board: zerosState,
     hasCrackedGame: false,
-    isGameOver: false
+    isGameOver: false,
+    score: 0
   }
   return initialState
 }

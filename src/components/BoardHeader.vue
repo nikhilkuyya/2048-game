@@ -3,8 +3,11 @@
 <template>
     <header>
         <h1>{{title}}</h1>
-        <input type="button" :value="gameButtonValue" @click="startNewGame"/>
-        <div :class="{ 'goal-finished' : goalReached , 'game-over': isGameOver}" >
+        <input type="button" :value="gameButtonValue" @click="startNewGame"/>        
+        <div>
+          <input type="text" class="score" readonly :value="boardScore"/>
+        </div>
+        <div :class="{'goal-finished' : goalReached , 'game-over': isGameOver}" >
           <p v-if="goalReached">
             Congrats!!, You have Reached 2048 mileStone.
           </p>
@@ -42,6 +45,9 @@ export default {
     isGameOver: function() {
       const isGameOver = this.$store.getters.isGameOver
       return isGameOver
+    },
+    boardScore: function() {
+      return this.$store.getters.boardScore
     }
   },
   methods: {
@@ -53,9 +59,17 @@ export default {
 </script>
 
 <style>
+.score {
+  background-color: antiquewhite;
+  color: black;
+  width: 40%;
+  margin: auto;
+  margin-left: 1rem;
+}
+
 input {
   float: left;
-  border-radius: 10%;
+  border-radius: 8%;
   background-color: aqua;
   color: orangered;
   font-size: 2rem;

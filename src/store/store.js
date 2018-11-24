@@ -15,6 +15,9 @@ export const store = new Vuex.Store({
     ...setInitialState()
   },
   getters: {
+    boardScore: state => {
+      return state.score
+    },
     boardState: state => {
       return state.board
     },
@@ -38,7 +41,14 @@ export const store = new Vuex.Store({
     },
 
     swipAction: function(state, swipDirection) {
-      state.board = handleSwip(state.board, swipDirection)
+      const { board: updatedBoard, score } = handleSwip(
+        state.board,
+        swipDirection
+      )
+
+      state.board = updatedBoard
+      state.score = state.score + score
+
       const { hasGoalReached, freeSpaces } = getBoardInformation(state.board)
 
       state.hasCrackedGame = hasGoalReached

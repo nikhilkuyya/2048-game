@@ -70,7 +70,7 @@ describe("has matrix transformed", () => {
     ]
 
     singleChange.map(testObject => {
-      test(`${test.message}`, () => {
+      test(`${testObject.message}`, () => {
         expect(
           hasTransformed(
             testObject.originalMatrix,
@@ -118,7 +118,7 @@ describe("has matrix transformed", () => {
     ]
 
     hasMerged.map(testObject => {
-      test(`${test.message}`, () => {
+      test(`${testObject.message}`, () => {
         expect(
           hasTransformed(
             testObject.originalMatrix,
