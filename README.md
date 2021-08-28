@@ -1,4 +1,4 @@
-# 2048-game
+# [2048-game](https://2048-nikhilkuyya.netlify.app/)
 
 Building the 2048 game.
 
